@@ -4,13 +4,21 @@
 	
 </head>
 <body>
-	<div class="messageContainer">
-		<textarea></textarea>
-		<div class="letterWrap">
-			
-		</div>
+
+	<div id="app">
+		<letter-form v-bind:list="letters"></letter-form>
 	</div>
 
+	<template id="letter-template">
+		<div class="messageContainer">
+			<textarea @keypress="addLetter($event)" @keydown.8="deleteLetter()"></textarea>
+			<div class="letterWrap">
+				<span v-for="letter in list">{{letter.char}}</span>
+			</div>
+		</div>
+	</template>
+
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
+	<script type="text/javascript" src="./js/mainvue.js"></script>
 </body>
 </html>
