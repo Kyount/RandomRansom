@@ -6,14 +6,16 @@
 <body>
 
 	<div id="app">
-		<letter-form v-bind:list="letters"></letter-form>
+		<letter-form :list="letters"></letter-form>
 	</div>
 
 	<template id="letter-template">
 		<div class="messageContainer">
 			<textarea @keypress="addLetter($event)" @keydown.8="deleteLetter()"></textarea>
 			<div class="letterWrap">
-				<span v-for="letter in list">{{letter.char}}</span>
+				<span v-for="letter in list" :style="setStyle">
+					{{letter.char}}
+				</span>
 			</div>
 		</div>
 	</template>
