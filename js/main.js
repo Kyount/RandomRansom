@@ -23,16 +23,16 @@
 		var setLetterObj = function(letter) {
 			var obj = new letterObj(letter);
 			setColors(obj);
-			// n.background = getRandomBackgroundColor(n);
-			// n.color = randomBoolean(blackOrWhite(), randomizeTextColor(n), 0.5);
 			obj.size = "100px";
 			return obj;
 		};
 
 		var setColors = function(obj) {
 			var c = randomFromList(colorMap);
-			obj.color = c[0];
-			obj.background = c[1];
+			if (obj.letter !== " ") { //set the text and background color
+				obj.color = c[0];
+				obj.background = c[1];
+			}
 		};
 
 		var colorMap = [//[TEXT, BACKGROUND]
@@ -61,17 +61,46 @@
 			['#FF3434', '#542761'],//red on dark purple
 			['#19FFA1', '#FF67C1'],//light green on pink
 			['#CECECE', '#6B6B6B'],//light gray on dark gray
-			['#2196F3', '#FFEB3B']//blue on yellow
+			['#2196F3', '#FFEB3B'],//blue on yellow
+			//end custom color schemes
+			['#FF0000', '#FFFFFF'],//red
+			['#FF8300', '#FFFFFF'],//orange
+			['#0093FF', '#FFFFFF'],//blue
+			['#3500FF', '#FFFFFF'],//dark blue
+			['#9F00FF', '#FFFFFF'],//purple
+			['#FF008B', '#FFFFFF'],//pink
+			['#FFCA00', '#000000'],//orange
+			['#00FF68', '#000000'],//green
+			['#FD00FF', '#000000'],//pink
+			//end black/white background
+			['#000000', '#00FFAA'],//light green
+			['#000000', '#FF0079'],//pink
+			['#000000', '#A1D9FF'],//blue
+			['#000000', '#FAFFA1'],//yellow
+			['#FFFFFF', '#3B00D2'],//blue
+			['#FFFFFF', '#5E9E59'],//green
+			['#FFFFFF', '#99599E'],//purple
+			['#FFFFFF', '#FF5D5D'],//red
+			//end back/white text
+			['#FFFFFF', '#000000'],
+			['#FFFFFF', '#000000'],
+			['#000000', '#FFFFFF'],
+			['#000000', '#FFFFFF'],
+			['#000000', '#FFFFFF'],
+			['#000000', '#FFFFFF'],
+			['#000000', '#FFFFFF'],
+			['#000000', '#FFFFFF'],
+			['#000000', '#FFFFFF']
+			//black white text is more common,
 		];
 	});
 
-	function letterObj(letter) {
+	function letterObj(letter) { //Letter object constructor
 		this.letter = letter;
-		this.color = '#000000';
+		this.color = '';
 		this.font = 'Arial';
 		this.size = "50px";
-		this.background = '#FFFFFF';
-		this.blend = 1;
+		this.background = '';
 	}
 
 	var randomBoolean = function(x, y, weight) { //randomly selects boolean based on weight (as decimal)
