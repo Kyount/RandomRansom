@@ -6,7 +6,7 @@
 		this.message = []; //array for cumulation of individual letters
 
 		this.checkForBackspace = function(key) {
-			if (key.keyCode === 8) {
+			if (key.keyCode === 8) { //delete last letter if key was backspace
 				this.deleteLetter();
 			}
 		};
@@ -24,7 +24,7 @@
 			var n = new letterObj(letter);
 			n.background = getRandomBackgroundColor(n);
 			n.color = randomBoolean(blackOrWhite(), randomizeTextColor(n), 0.5);
-			n.size = "60px";
+			n.size = "100px";
 			return n;
 		};
 
@@ -34,7 +34,7 @@
 
 		var getRandomBackgroundColor = function(n) {
 			var c = n.color;
-			if (n.letter !== " ") {
+			if (n.letter !== " ") {//do not color background on space character
 
 				if (c === "#FFFFFF") { return randomColor({
 						luminosity: randomBoolean('dark', 'bright', 0.5),
@@ -46,10 +46,6 @@
 					});
 				}
 			}
-		};
-
-		var randomizeTextColor = function(color) {
-
 		};
 	});
 
