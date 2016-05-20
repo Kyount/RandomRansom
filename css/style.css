@@ -1,0 +1,21 @@
+body {
+  margin: 0; }
+
+textarea {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  resize: none;
+  opacity: 0; }
+
+.messageContainer {
+  max-width: 800px;
+  margin: 0 auto; }
+
+.letterWrap {
+  width: 100%;
+  overflow-wrap: break-word; }
