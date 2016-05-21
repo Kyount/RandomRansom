@@ -118,10 +118,17 @@ Vue.component('letter', {
 				backgroundColor: '',
 				fontFamily: '',
 				textShadow: '',
+				boxShadow: '',
+				marginLeft: '',
+				marginRight: '',
+				paddingLeft: '',
+				paddingRight: '',
+				transform: ''
 			},
 			initSize: 100,
 			sizeVariance: 50,
-			shadowAmt: 7,
+			shadowAmt: 5,
+			rotateVariance: 10,
 
 		}
 	},
@@ -148,21 +155,38 @@ Vue.component('letter', {
 		setSize: function() {
 			var siV = this.sizeVariance;
 			var inS = this.initSize;
-			this.styleObj.fontSize = (Math.floor((Math.random()*siV) - (siV/2)) + inS) + 'px';
+			this.styleObj.fontSize = (Math.floor((Math.random()*siV) - (siV/2)) + inS)/10 + 'em';
 		},
 		setFont: function() {
 			this.styleObj.fontFamily = this.fonts;
 		},
 		setStyle: function() {
-			if (this.randomBoolean(true, false, 0.5)) {
-				var n = Math.floor(Math.random()*this.shadowAmt);
-				var m = (Math.random() * (1 - 0.3)) + 0.3;
-				console.log(m);
-				this.styleObj.textShadow =
-					this.randomBoolean(n, -n, 0.5) + "px "
-					+ this.randomBoolean(n, -n, 0.5) + "px " +
-					"0px " + "rgba(0,0,0," + m + ")";
-				console.log(this.styleObj.textShadow);
+			if (this.char !== " ") {
+				if (this.randomBoolean(true, false, 0.5)) {
+					var n = Math.floor(Math.random()*this.shadowAmt);
+					var m = (Math.random() * (1 - 0.3)) + 0.3;
+					this.styleObj.textShadow =
+						this.randomBoolean(n, -n, 0.5) + "px "
+						+ this.randomBoolean(n, -n, 0.5) + "px " +
+						"0px " + "rgba(0,0,0," + m + ")";
+				}
+				if (this.randomBoolean(true, false, 0.5)) {
+					// this.styleObj.marginRight = Math.random()/8 + "em";
+					// this.styleObj.marginLeft = Math.random()/8 + "em";
+				} else {
+					var v = this.rotateVariance;
+					var r = ((Math.random()*v*2)-v) + "deg";
+					this.styleObj.transform = "rotate(" + r + ")";
+				}
+				if (this.randomBoolean(true, false, 0.5)) {
+					this.styleObj.paddingRight = Math.random()/4 + "em";
+				}
+				if (this.randomBoolean(true, false, 0.5)) {
+					this.styleObj.paddingLeft = Math.random()/4 + "em";
+				}
+			} else {
+				this.styleObj.marginRight = "0.5em";
+				this.styleObj.marginLeft = "0.5em";
 			}
 		}
 	}
@@ -197,7 +221,6 @@ new Vue({
 				c.push(this.randomFromList(this.colorMap));
 				f.push(this.randomFromList(this.fontList));
 			}
-			console.log(c);
 			for (i=0; i<l; i++) {
 				children[i].colors[0] = c[i][0];
 				children[i].colors[1] = c[i][1];

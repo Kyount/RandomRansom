@@ -5,8 +5,7 @@
 </head>
 <body>
 
-	<div id="app">
-		<div class="messageContainer"></div>
+	<div id="app" class="messageContainer">
 			<button @click="randomizeLetters()">random</button>
 			<textarea @keypress="setCharacter($event)" @keydown.8="deleteLetter()"></textarea>
 			<div class="letterWrap">
