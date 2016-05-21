@@ -10,7 +10,7 @@
 			<button @click="randomizeLetters()">random</button>
 			<textarea @keypress="setCharacter($event)" @keydown.8="deleteLetter()"></textarea>
 			<div class="letterWrap">
-				<letter v-for="letter in letters" v-ref:item :char="letter.char" :colors="letter.colors"></letter>
+				<letter v-for="letter in letters" v-ref:item :char="letter.char" :colors="letter.color" :fonts="letter.font"></letter>
 			</div>
 		</div>
 	</div>
