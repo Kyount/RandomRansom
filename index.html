@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html ng-app="ransom">
+<html>
 <head>
-	<link rel="stylesheet" href="./css/style.css">
+	
 </head>
-<body ng-controller="MessageController as msgCtrl">
+<body>
 
-	<div class="messageContainer">
-		<textarea ng-keypress="msgCtrl.addLetter($event)" ng-keydown="msgCtrl.checkForBackspace($event)" autofocus></textarea>
-		<div class="letterWrap">
-			<span class="letter" ng-repeat="o in msgCtrl.message"
-			ng-bind="o.letter"
-			ng-style="{'color': o.color, 'font-family': o.font, 'font-size': o.size, 'background-color': o.background}"	
-			></span>
+	<div id="app">
+		<div class="messageContainer"></div>
+			<button @click="randomizeLetters()">random</button>
+			<textarea @keypress="setCharacter($event)" @keydown.8="deleteLetter()"></textarea>
+			<div class="letterWrap">
+				<letter v-for="letter in letters" v-ref:item :char="letter.char" :colors="letter.color" :fonts="letter.font"></letter>
+			</div>
 		</div>
 	</div>
 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.4.4/randomColor.min.js"></script>
-	<script type="text/javascript" src="./js/main.js"></script>
+	<template id="letter-template">
+		<span :style="styleObj">{{char}}</span>
+	</template>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
+	<script type="text/javascript" src="./js/mainvue.js"></script>
 </body>
 </html>
