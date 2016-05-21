@@ -74,37 +74,38 @@ var randoMixin = {
 }
 
 Vue.component('letter', {
-	props: ['char'],
-	mixins: [randoMixin, colorMixin],
+	props: ['char', 'colors'],
+	mixins: [randoMixin],
 	data: function() {
 		return {
-			color: '',
-			size: '',
-			bg: '',
-			font: ''
+			styleObj: {
+				color: '',
+				fontSize: '',
+				backgroundColor: '',
+				fontFamily: ''
+			}
 		}
 	},
 	template: '#letter-template',
 	created: function() {
-		this.setColor();
+		this.setColors();
 		this.setSize();
 		this.setFont();
 	},
 	computed: {
-		compStyle: function() {
-			return {
-				color: this.color,
-				fontSize: this.size,
-				backgroundColor: this.bg,
-				fontFamily: this.font
-			}
-		}
+		// compStyle: function() {
+		// 	return {
+		// 		color: this.colors[0],
+		// 		backgroundColor: this.colors[1],
+		// 		fontSize: this.size,
+		// 		fontFamily: this.font
+		// 	}
+		// }
 	},
 	methods: {
-		setColor: function() {
-			var c = this.randomFromList(this.colorMap);
-			this.color = c[0];
-			this.bg = c[1];
+		setColors: function() {
+			this.styleObj.color = this.colors[0];
+			this.styleObj.backgroundColor = this.colors[1];
 		},
 		setSize: function() {
 			this.size = "50px";
@@ -117,24 +118,31 @@ Vue.component('letter', {
 
 new Vue({
 	el: '#app',
-	mixins: [colorMixin],
+	mixins: [randoMixin, colorMixin],
 	data: {
 		letters: [], //The array that holds the letters
 	},
 	computed: {
 
 	},
-
 	methods: {
-		
 		setCharacter: function(obj) {
 			this.letters.push({
 				char: String.fromCharCode(obj.charCode),
+				colors: this.randomFromList(this.colorMap)
 			}); //Pushes letter into letters array
 		},
-
 		deleteLetter: function() {
 			this.letters.pop(); //deletes last letter in array
+		},
+		randomizeLetters: function() {
+			var children = this.$refs.item;
+			for (i=0; i<children.length; i++) {
+				var c = this.randomFromList(this.colorMap);
+				children[i].colors[0] = c[0];
+				children[i].colors[1] = c[1];
+				children[i].setColors();
+			}
 		}
 	}
 });

@@ -7,15 +7,16 @@
 
 	<div id="app">
 		<div class="messageContainer"></div>
+			<button @click="randomizeLetters()">random</button>
 			<textarea @keypress="setCharacter($event)" @keydown.8="deleteLetter()"></textarea>
 			<div class="letterWrap">
-				<letter v-for="letter in letters" :char="letter.char"></letter>
+				<letter v-for="letter in letters" v-ref:item :char="letter.char" :colors="letter.colors"></letter>
 			</div>
 		</div>
 	</div>
 
 	<template id="letter-template">
-		<span :style="compStyle">{{char}}</span>
+		<span :style="styleObj">{{char}}</span>
 	</template>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
