@@ -6,18 +6,16 @@
 <body>
 
 	<div id="app">
-		<letter-form :list="letters"></letter-form>
+		<div class="messageContainer"></div>
+			<textarea @keypress="setCharacter($event)" @keydown.8="deleteLetter()"></textarea>
+			<div class="letterWrap">
+				<letter v-for="letter in letters" :char="letter.char"></letter>
+			</div>
+		</div>
 	</div>
 
 	<template id="letter-template">
-		<div class="messageContainer">
-			<textarea @keypress="addLetter($event)" @keydown.8="deleteLetter()"></textarea>
-			<div class="letterWrap">
-				<span v-for="letter in list" :style="setStyle">
-					{{letter.char}}
-				</span>
-			</div>
-		</div>
+		<span :style="compStyle">{{char}}</span>
 	</template>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
