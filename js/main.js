@@ -1,3 +1,15 @@
+WebFontConfig = {
+    google: { families: [ 'Lobster::latin', 'Patua+One::latin', 'Abril+Fatface::latin', 'Bangers::latin', 'Special+Elite::latin', 'Black+Ops+One::latin', 'Roboto+Mono::latin', 'PT+Mono::latin', 'Cutive+Mono::latin', 'Oswald::latin', 'PT+Sans::latin', 'Slabo+27px::latin', 'Lora::latin', 'Roboto+Slab::latin', 'Droid+Serif::latin', 'Merriweather::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+
 var colorMixin = {
 	data: function() {
 		return {
@@ -60,14 +72,22 @@ var colorMixin = {
 				//black white text is more common,
 			],
 			fontList: [
-				'Georgia, serif',
-				'"Palatino Linotype", "Book Antiqua", Palatino, serif',
-				'"Times New Roman", Times, serif',
-				'Arial, Helvetica, sans-serif',
-				'"Arial Black", Gadget, sans-serif',
-				'"Comic Sans MS", cursive, sans-serif',
-				'Impact, Charcoal, sans-serif',
-				'"Lucida Sans Unicode", "Lucida Grande", sans-serif',
+				"'Lobster', cursive",
+				"Patua One, cursive",
+				"'Abril Fatface', cursive",
+				"'Bangers', cursive",
+				"'Special Elite', cursive",
+				"'Black Ops One', cursive",
+				"'Roboto Mono', ",
+				"'PT Mono', ",
+				"'Cutive Mono', ",
+				"'Oswald', sans-serif",
+				"'PT Sans', sans-serif",
+				"'Slabo 27px', serif",
+				"'Lora', serif",
+				"'Roboto Slab', serif",
+				"'Droid Serif', serif",
+				"'Merriweather', serif"
 			],
 		}
 	}
@@ -78,7 +98,11 @@ var randoMixin = {
 		randomFromList: function(x) { //randomly selects an item from an array
 			var l = x.length;
 			var n = Math.floor(Math.random()*l);
+			// console.log("number = " + n + "-- item = " + x[n]);
 			return x[n];
+		},
+		randomBoolean: function(x, y, weight) {
+			return Math.random()<weight ? x : y;
 		}
 	}
 }
@@ -92,10 +116,12 @@ Vue.component('letter', {
 				color: '',
 				fontSize: '',
 				backgroundColor: '',
-				fontFamily: ''
+				fontFamily: '',
+				textShadow: '',
 			},
 			initSize: 100,
 			sizeVariance: 50,
+			shadowAmt: 7,
 
 		}
 	},
@@ -104,6 +130,7 @@ Vue.component('letter', {
 		this.setColors();
 		this.setSize();
 		this.setFont();
+		this.setStyle();
 	},
 	computed: {
 		
@@ -125,6 +152,18 @@ Vue.component('letter', {
 		},
 		setFont: function() {
 			this.styleObj.fontFamily = this.fonts;
+		},
+		setStyle: function() {
+			if (this.randomBoolean(true, false, 0.5)) {
+				var n = Math.floor(Math.random()*this.shadowAmt);
+				var m = (Math.random() * (1 - 0.3)) + 0.3;
+				console.log(m);
+				this.styleObj.textShadow =
+					this.randomBoolean(n, -n, 0.5) + "px "
+					+ this.randomBoolean(n, -n, 0.5) + "px " +
+					"0px " + "rgba(0,0,0," + m + ")";
+				console.log(this.styleObj.textShadow);
+			}
 		}
 	}
 });
@@ -151,15 +190,22 @@ new Vue({
 		},
 		randomizeLetters: function() {
 			var children = this.$refs.item;
-			for (i=0; i<children.length; i++) {
-				var c = this.randomFromList(this.colorMap);
-				var f = this.randomFromList(this.fontList);
-				children[i].colors[0] = c[0];
-				children[i].colors[1] = c[1];
-				children[i].fonts = f;
+			var l = children.length;
+			var c = [];
+			var f = [];
+			for (i=0; i<l; i++) {
+				c.push(this.randomFromList(this.colorMap));
+				f.push(this.randomFromList(this.fontList));
+			}
+			console.log(c);
+			for (i=0; i<l; i++) {
+				children[i].colors[0] = c[i][0];
+				children[i].colors[1] = c[i][1];
+				children[i].fonts = f[i];
 				children[i].setColors();
 				children[i].setSize();
 				children[i].setFont();
+				children[i].setStyle();
 			}
 		}
 	}
