@@ -101,6 +101,25 @@ textarea {
 	}
 }
 
+.typeMessage {
+	font-family: "Patua One";
+	color: #BBBBBB;
+	display: block;
+	position: fixed;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-size: 10em;
+	margin-top: 50px;
+	animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+	0% {opacity: 1}
+	50% {opacity: 0.5}
+	100% {opacity: 1}
+}
+
 .infoContainerWrap {
 	font-family: "Lato";
 	font-size: 16px;

@@ -71,7 +71,7 @@ var colorMixin = {
 				// ['#000000', '#FFFFFF']
 				//black white text is more common,
 			],
-			fontList: [
+			fontList: [ //Fonts
 				"'Lobster', cursive",
 				"Patua One, cursive",
 				"'Abril Fatface', cursive",
@@ -104,20 +104,20 @@ var randoMixin = {
 			// console.log("number = " + n + "-- item = " + x[n]);
 			return x[n];
 		},
-		randomBoolean: function(x, y, weight) {
+		randomBoolean: function(x, y, weight) { //randomly selects either x or y item based on the ratio in "weight"
 			return Math.random()<weight ? x : y;
 		}
 	}
 }
 
-Vue.component('letter', {
-	props: ['char', 'colors', 'fonts'],
+Vue.component('letter', { //the component block for each letter
+	props: ['char', 'colors', 'fonts'], //char = character; colors = color scheme passed in from color array, fonts = font list passed in from font array
 	mixins: [randoMixin],
 	data: function() {
 		return {
 			styleObj: {
-				color: '',
-				fontSize: '',
+				color: '', //All these coorespond to their CSS style values
+				fontSize: '', 
 				backgroundColor: '',
 				fontFamily: '',
 				textShadow: '',
@@ -128,29 +128,26 @@ Vue.component('letter', {
 				paddingRight: '',
 				transform: ''
 			},
-			initSize: 100,
-			sizeVariance: 50,
-			shadowAmt: 5,
-			rotateVariance: 10,
+			initSize: 100, //base size of letter
+			sizeVariance: 50, //amount of random variance allowed per letter
+			shadowAmt: 5, //amount of random shadow variance allowed per letter
+			rotateVariance: 10, //amount of random rotation variance allowed per letter
 
 		}
 	},
 	template: '#letter-template',
-	created: function() {
-		this.setColors();
-		this.setSize();
-		this.setFont();
-		this.setStyle();
-	},
-	computed: {
-		
+	created: function() { //when each letter is created
+		this.setColors(); //set the colors
+		this.setSize(); //set the letter size
+		this.setFont(); //set the fonts
+		this.setStyle(); //set the style
 	},
 	methods: {
 		setColors: function() {
-			if (this.char !== " ") {
-				this.styleObj.color = this.colors[0];
-				this.styleObj.backgroundColor = this.colors[1];
-			} else {
+			if (this.char !== " ") { //if the character isn't a space
+				this.styleObj.color = this.colors[0]; //set the letter color
+				this.styleObj.backgroundColor = this.colors[1]; //set the background color
+			} else { //if the character is a space, make sure it doesn't have a color
 				this.styleObj.color = '';
 				this.styleObj.backgroundColor = '';
 			}
@@ -159,47 +156,45 @@ Vue.component('letter', {
 			var siV = this.sizeVariance;
 			var inS = this.initSize;
 			this.styleObj.fontSize = (Math.floor((Math.random()*siV) - (siV/2)) + inS)/10 + 'em';
+			//sets the size to be +- size variance based on the initial size randomly
 		},
 		setFont: function() {
-			this.styleObj.fontFamily = this.fonts;
+			this.styleObj.fontFamily = this.fonts; //grabs a font from the array
 		},
 		setStyle: function() {
-			if (this.char !== " ") {
-				if (this.randomBoolean(true, false, 0.5)) {
+			if (this.char !== " ") { //make sure a space isn't assigned a style
+				if (this.randomBoolean(true, false, 0.5)) { // 50% chance
 					var n = Math.floor(Math.random()*this.shadowAmt);
 					var m = (Math.random() * (1 - 0.3)) + 0.3;
 					this.styleObj.textShadow =
 						this.randomBoolean(n, -n, 0.5) + "px "
 						+ this.randomBoolean(n, -n, 0.5) + "px " +
 						"0px " + "rgba(0,0,0," + m + ")";
-				}
-				if (this.randomBoolean(true, false, 0.5)) {
-					// this.styleObj.marginRight = Math.random()/8 + "em";
-					// this.styleObj.marginLeft = Math.random()/8 + "em";
-				} else {
+				} //this just sets the drop shadow based on the shadow variance value
+				if (this.randomBoolean(true, false, 0.5)) { // 50% chance
 					var v = this.rotateVariance;
 					var r = ((Math.random()*v*2)-v) + "deg";
-					this.styleObj.transform = "rotate(" + r + ")";
+					this.styleObj.transform = "rotate(" + r + ")"; //assign random rotation
 				}
-				if (this.randomBoolean(true, false, 0.5)) {
-					this.styleObj.paddingRight = Math.random()/4 + "em";
+				if (this.randomBoolean(true, false, 0.5)) { // 50% chance
+					this.styleObj.paddingRight = Math.random()/4 + "em"; //assign random padding right
 				}
-				if (this.randomBoolean(true, false, 0.5)) {
-					this.styleObj.paddingLeft = Math.random()/4 + "em";
+				if (this.randomBoolean(true, false, 0.5)) { // 50% chance
+					this.styleObj.paddingLeft = Math.random()/4 + "em"; //assign random padding left
 				}
-			} else {
-				this.styleObj.marginRight = "0.5em";
-				this.styleObj.marginLeft = "0.5em";
+			} else { //if the character is a space assign it a margin only
+				this.styleObj.marginRight = "0.3em";
+				this.styleObj.marginLeft = "0.3em";
 			}
 		}
 	}
 });
 
-Vue.component('info', {
+Vue.component('info', { //template for the info popup
 	template: '#info-template',
 	methods: {
 		enableColors: function() {
-			colorEnable = !colorEnable;
+			colorEnable = !colorEnable; //this won't be here once I figure out the random bug
 		}
 	}
 });
@@ -211,37 +206,43 @@ new Vue({
 	mixins: [randoMixin, colorMixin],
 	data: {
 		letters: [], //The array that holds the letters
-		infoShow: false
+		infoShow: false //show or hide the array
 	},
 	computed: {
-
+		typeShow: function() { //hide the "start typing..." when there are letters visible
+			if (!this.letters.length) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	},
 	methods: {
-		setCharacter: function(obj) {
-			window.scrollTo(0,document.body.scrollHeight);
-			this.letters.push({
-				char: String.fromCharCode(obj.charCode),
-				color: this.randomFromList(this.colorMap),
-				font: this.randomFromList(this.fontList)
+		setCharacter: function(obj) { //triggers every time the users enters a character
+			window.scrollTo(0,document.body.scrollHeight); //scrolls the window to follow the characters
+			this.letters.push({ //pushing into the message array
+				char: String.fromCharCode(obj.charCode), //character code into actual character
+				color: this.randomFromList(this.colorMap), //color from list
+				font: this.randomFromList(this.fontList) //font from list
 			}); //Pushes letter into letters array
 		},
 		deleteLetter: function() {
 			this.letters.pop(); //deletes last letter in array
 		},
-		randomizeLetters: function() {
-			var children = this.$refs.item;
+		randomizeLetters: function() { //randomization function
+			var children = this.$refs.item; //grab all the children
 			var l = children.length;
 			var c = [];
 			var f = [];
-			for (i=0; i<l; i++) {
+			for (i=0; i<l; i++) { //fill the array with random values from the respective lists
 				c.push(this.randomFromList(this.colorMap));
 				f.push(this.randomFromList(this.fontList));
 			}
-			for (i=0; i<l; i++) {
+			for (i=0; i<l; i++) { //re-assign all the values randomly per child
 				children[i].colors[0] = c[i][0];
 				children[i].colors[1] = c[i][1];
 				children[i].fonts = f[i];
-				if (colorEnable) {
+				if (colorEnable) { //this is buggy, you have to hit the button in the info page to enable it.
 					children[i].setColors();
 				}
 				children[i].setSize();
@@ -249,7 +250,7 @@ new Vue({
 				children[i].setStyle();
 			}
 		},
-		toggleInfo: function() {
+		toggleInfo: function() { //show the info
 			this.infoShow = !this.infoShow;
 		},
 	}

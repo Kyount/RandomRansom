@@ -16,6 +16,7 @@
 				</div>
 			</div>
 			<info v-show="infoShow" @click="toggleInfo()"></info>
+			<div class="typeMessage" v-show="typeShow">Start typing...</div>
 			<textarea @keypress="setCharacter($event)"
 					@keydown.8="deleteLetter()" autofocus
 			></textarea>
@@ -50,7 +51,7 @@
 		</div>
 	</template>
 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.min.js"></script>
 	<script type="text/javascript" src="./js/main.js"></script>
 </body>
 </html>
