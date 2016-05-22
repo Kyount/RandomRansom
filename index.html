@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
 	<div id="app" class="messageContainer">
-			<button @click="randomizeLetters()">random</button>
+			<div class="header">
+				<div class="title">Ransom Note Generator</div>
+				<button @click="randomizeLetters()">randomize</button>
+			</div>
 			<textarea @keypress="setCharacter($event)" @keydown.8="deleteLetter()"></textarea>
 			<div class="letterWrap">
-				<letter v-for="letter in letters" v-ref:item :char="letter.char" :colors="letter.color" :fonts="letter.font"></letter>
+				<letter class="letter" v-for="letter in letters" v-ref:item :char="letter.char" :colors="letter.color" :fonts="letter.font"></letter>
 			</div>
 		</div>
 	</div>

@@ -1,26 +1,74 @@
 body {
+  width: 100%;
   margin: 0;
-  font-size: 10px; }
+  font-size: 1vw; }
+  @media (min-width: 1000px) {
+    body {
+      font-size: 10px; } }
+  @media (max-width: 400px) {
+    body {
+      font-size: 4px; } }
 
 textarea {
   display: block;
   position: fixed;
-  top: 20px;
+  top: 15vw;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
   resize: none;
   opacity: 0; }
+  @media (min-width: 800px) {
+    textarea {
+      top: 120px; } }
 
 .messageContainer {
   max-width: 1000px;
+  height: 100%;
   margin: 0 auto; }
+  .messageContainer .header {
+    position: relaitve;
+    height: 60px;
+    width: 100%; }
+    .messageContainer .header .title {
+      color: #BBBBBB;
+      position: relative;
+      top: 15px;
+      font-size: 4.5em;
+      font-family: "Patua One";
+      margin-left: 20px; }
+    .messageContainer .header button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 100px;
+      height: 40px;
+      font-family: "Patua One";
+      border: 3px solid rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      background-color: transparent;
+      color: #BBBBBB;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: inset -2px -2px 2px 1px rgba(0, 0, 0, 0.2);
+      outline: 0; }
+    .messageContainer .header button:active {
+      background-color: transparent;
+      box-shadow: inset 2px 2px 2px 1px rgba(0, 0, 0, 0.2); }
+  .messageContainer #cursor {
+    height: 10em;
+    width: 6em;
+    background-color: black;
+    position: relative;
+    top: 1em; }
 
 .letterWrap {
-  width: 100%;
-  overflow-wrap: break-word;
-  padding-right: 20px;
-  padding-left: 20px; }
+  display: block;
+  margin-top: 40px;
+  padding-right: 1em;
+  padding-left: 1em; }
   .letterWrap span {
     display: inline-block; }
+  .letterWrap .letter {
+    position: relative; }
