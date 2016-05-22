@@ -192,11 +192,16 @@ Vue.component('letter', {
 	}
 });
 
+Vue.component('info', {
+	template: '#info-template'
+});
+
 new Vue({
 	el: '#app',
 	mixins: [randoMixin, colorMixin],
 	data: {
 		letters: [], //The array that holds the letters
+		infoShow: false
 	},
 	computed: {
 
@@ -230,6 +235,9 @@ new Vue({
 				children[i].setFont();
 				children[i].setStyle();
 			}
+		},
+		showInfo: function() {
+			this.infoShow = !this.infoShow;
 		}
 	}
 });
