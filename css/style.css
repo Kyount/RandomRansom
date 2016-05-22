@@ -28,34 +28,39 @@ textarea {
   height: 100%;
   margin: 0 auto; }
   .messageContainer .header {
+    display: flex;
     position: relaitve;
-    height: 60px;
     width: 100%; }
     .messageContainer .header .title {
+      flex: 1;
+      min-width: 100px;
       color: #BBBBBB;
       position: relative;
       top: 15px;
       font-size: 4.5em;
       font-family: "Patua One";
       margin-left: 20px; }
-    .messageContainer .header button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 100px;
-      height: 40px;
-      font-family: "Patua One";
-      border: 3px solid rgba(0, 0, 0, 0.2);
-      border-radius: 20px;
-      background-color: transparent;
-      color: #BBBBBB;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: inset -2px -2px 2px 1px rgba(0, 0, 0, 0.2);
-      outline: 0; }
-    .messageContainer .header button:active {
-      background-color: transparent;
-      box-shadow: inset 2px 2px 2px 1px rgba(0, 0, 0, 0.2); }
+    .messageContainer .header .buttons {
+      flex: 1;
+      display: flex;
+      margin: 10px;
+      max-width: 250px; }
+      .messageContainer .header .buttons button {
+        flex: 1;
+        margin-left: 5px;
+        height: 40px;
+        font-family: "Patua One";
+        border: 3px solid rgba(0, 0, 0, 0.2);
+        border-radius: 20px;
+        background-color: transparent;
+        color: #BBBBBB;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: inset -2px -2px 2px 1px rgba(0, 0, 0, 0.2);
+        outline: 0; }
+      .messageContainer .header .buttons button:active {
+        background-color: transparent;
+        box-shadow: inset 2px 2px 2px 1px rgba(0, 0, 0, 0.2); }
   .messageContainer #cursor {
     height: 10em;
     width: 6em;

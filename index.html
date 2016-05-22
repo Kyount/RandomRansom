@@ -9,7 +9,10 @@
 	<div id="app" class="messageContainer">
 			<div class="header">
 				<div class="title">Ransom Note Generator</div>
-				<button @click="randomizeLetters()">randomize</button>
+				<div class="buttons">
+					<button @click="randomizeLetters()">randomize</button>
+					<button>info</button>
+				</div>
 			</div>
 			<textarea @keypress="setCharacter($event)" @keydown.8="deleteLetter()"></textarea>
 			<div class="letterWrap">
