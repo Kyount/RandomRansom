@@ -3,6 +3,7 @@
 <head>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -11,11 +12,13 @@
 				<div class="title">Ransom Note Generator</div>
 				<div class="buttons">
 					<button @click="randomizeLetters()">randomize</button>
-					<button @click="showInfo()">info</button>
+					<button @click="toggleInfo()">info</button>
 				</div>
 			</div>
-			<info v-show="infoShow"></info>
-			<textarea @keypress="setCharacter($event)" @keydown.8="deleteLetter()"></textarea>
+			<info v-show="infoShow" @click="toggleInfo()"></info>
+			<textarea @keypress="setCharacter($event)"
+					@keydown.8="deleteLetter()" autofocus
+			></textarea>
 			<div class="letterWrap">
 				<letter class="letter" v-for="letter in letters" v-ref:item :char="letter.char" :colors="letter.color" :fonts="letter.font"></letter>
 			</div>
@@ -27,7 +30,24 @@
 	</template>
 
 	<template id="info-template">
-		<div>Hello</div>
+		<div class="infoContainerWrap">
+			<div class="infoContainer">
+				<h1>Designed by: Kyle Yount</h1>
+				<h2><a href='http://kyount.com'>www.kyount.com</a></h2>
+				<div class="icons">
+					<a href="https://twitter.com/Gatoraay"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+					<a href="https://www.linkedin.com/in/kyle-yount-90328639"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+				</div>
+				<p>Thank you for visiting! This is a small side-project I built that was intended to help me learn a reactive front-end framework, <a href="http://vuejs.org/">Vue.js</a> specifically. Special thanks to the great folks at <a href="https://laracasts.com">laracasts.com</a> for the fantastic instructional videos and support. I do not take responsibility for anyone that uses this demo for real ransom messages. If you are one of those people, please stop and think about what you're getting yourself into.</p>
+
+				<p>If you are an experienced Javascript and/or Vue developer, and you want to help me figure out a strange bug, <a href="#" @click="enableColors()">click here.</a> This will enable random colors. If you type more than a page's worth of text and attempt to randomize, you'll see the colors start to become less and less random. If you know what's going on, please feel free to contact me with the answer, I'd love to know.</p>
+
+				<p>If you like what you see and you're feeling generous, donations are much appreciated!</p>
+				<div class="donate">
+					<a href="https://paypal.me/KyleY">Donate</a>
+				</div>
+			</div>
+		</div>
 	</template>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>

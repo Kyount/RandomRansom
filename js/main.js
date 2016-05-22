@@ -1,5 +1,5 @@
 WebFontConfig = {
-    google: { families: [ 'Lobster::latin', 'Patua+One::latin', 'Abril+Fatface::latin', 'Bangers::latin', 'Special+Elite::latin', 'Black+Ops+One::latin', 'Roboto+Mono::latin', 'PT+Mono::latin', 'Cutive+Mono::latin', 'Oswald::latin', 'PT+Sans::latin', 'Slabo+27px::latin', 'Lora::latin', 'Roboto+Slab::latin', 'Droid+Serif::latin', 'Merriweather::latin' ] }
+    google: { families: [ 'Lobster::latin', 'Patua+One::latin', 'Abril+Fatface::latin', 'Bangers::latin', 'Special+Elite::latin', 'Black+Ops+One::latin', 'Roboto+Mono::latin', 'PT+Mono::latin', 'Cutive+Mono::latin', 'Oswald::latin', 'PT+Sans::latin', 'Slabo+27px::latin', 'Lora::latin', 'Roboto+Slab::latin', 'Droid+Serif::latin', 'Merriweather::latin', 'Open+Sans::latin', 'Rubik:300,500:latin', 'Lato:400,600:latin'] }
   };
   (function() {
     var wf = document.createElement('script');
@@ -87,7 +87,10 @@ var colorMixin = {
 				"'Lora', serif",
 				"'Roboto Slab', serif",
 				"'Droid Serif', serif",
-				"'Merriweather', serif"
+				"'Merriweather', serif",
+				"'Open+Sans', sans-serif",
+				"'Rubik', sans-serif",
+				"'Lato', sans-serif"
 			],
 		}
 	}
@@ -193,8 +196,15 @@ Vue.component('letter', {
 });
 
 Vue.component('info', {
-	template: '#info-template'
+	template: '#info-template',
+	methods: {
+		enableColors: function() {
+			colorEnable = !colorEnable;
+		}
+	}
 });
+
+var colorEnable = false;
 
 new Vue({
 	el: '#app',
@@ -208,6 +218,7 @@ new Vue({
 	},
 	methods: {
 		setCharacter: function(obj) {
+			window.scrollTo(0,document.body.scrollHeight);
 			this.letters.push({
 				char: String.fromCharCode(obj.charCode),
 				color: this.randomFromList(this.colorMap),
@@ -230,14 +241,16 @@ new Vue({
 				children[i].colors[0] = c[i][0];
 				children[i].colors[1] = c[i][1];
 				children[i].fonts = f[i];
-				children[i].setColors();
+				if (colorEnable) {
+					children[i].setColors();
+				}
 				children[i].setSize();
 				children[i].setFont();
 				children[i].setStyle();
 			}
 		},
-		showInfo: function() {
+		toggleInfo: function() {
 			this.infoShow = !this.infoShow;
-		}
+		},
 	}
 });

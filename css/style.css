@@ -70,6 +70,8 @@ textarea {
 
 .letterWrap {
   display: block;
+  position: relative;
+  z-index: -1;
   margin-top: 40px;
   padding-right: 1em;
   padding-left: 1em; }
@@ -77,3 +79,52 @@ textarea {
     display: inline-block; }
   .letterWrap .letter {
     position: relative; }
+
+.infoContainerWrap {
+  font-family: "Lato";
+  font-size: 16px;
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 20vmin;
+  z-index: 1; }
+  .infoContainerWrap .infoContainer {
+    background-color: white;
+    padding: 1em;
+    box-shadow: 1px 1px 17px 0px rgba(0, 0, 0, 0.2);
+    display: block;
+    max-width: 500px;
+    margin: 0 auto; }
+    .infoContainerWrap .infoContainer h1 {
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: 600; }
+    .infoContainerWrap .infoContainer h2 {
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: 600; }
+    .infoContainerWrap .infoContainer p {
+      padding: 0.5em;
+      font-size: 1em;
+      font-weight: 400; }
+    .infoContainerWrap .infoContainer a {
+      color: #000000; }
+    .infoContainerWrap .infoContainer .icons {
+      text-align: center;
+      font-size: 2em; }
+      .infoContainerWrap .infoContainer .icons i {
+        padding-left: 0.3em;
+        padding-right: 0.3em; }
+    .infoContainerWrap .infoContainer .donate {
+      text-align: center; }
+      .infoContainerWrap .infoContainer .donate a {
+        text-decoration: none;
+        padding: 6px 45px;
+        font-family: "Patua One";
+        border-radius: 20px;
+        background-color: #54ff96;
+        color: #FFFFFF;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: inset -2px -2px 2px 1px rgba(0, 0, 0, 0.2); }
