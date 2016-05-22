@@ -1,14 +1,14 @@
 WebFontConfig = {
-    google: { families: [ 'Lobster::latin', 'Patua+One::latin', 'Abril+Fatface::latin', 'Bangers::latin', 'Special+Elite::latin', 'Black+Ops+One::latin', 'Roboto+Mono::latin', 'PT+Mono::latin', 'Cutive+Mono::latin', 'Oswald::latin', 'PT+Sans::latin', 'Slabo+27px::latin', 'Lora::latin', 'Roboto+Slab::latin', 'Droid+Serif::latin', 'Merriweather::latin', 'Open+Sans::latin', 'Rubik:300,500:latin', 'Lato:400,600:latin'] }
-  };
-  (function() {
-    var wf = document.createElement('script');
-    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-    wf.type = 'text/javascript';
-    wf.async = 'true';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(wf, s);
-  })();
+google: { families: [ 'Lobster::latin', 'Patua+One::latin', 'Abril+Fatface::latin', 'Bangers::latin', 'Special+Elite::latin', 'Black+Ops+One::latin', 'Roboto+Mono::latin', 'PT+Mono::latin', 'Cutive+Mono::latin', 'Oswald::latin', 'PT+Sans::latin', 'Slabo+27px::latin', 'Lora::latin', 'Roboto+Slab::latin', 'Droid+Serif::latin', 'Merriweather::latin', 'Open+Sans::latin', 'Rubik:300,500:latin', 'Lato:400,600:latin'] }
+};
+(function() {
+var wf = document.createElement('script');
+wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+wf.type = 'text/javascript';
+wf.async = 'true';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(wf, s);
+})();
 
 var colorMixin = {
 	data: function() {
@@ -200,6 +200,7 @@ Vue.component('info', { //template for the info popup
 });
 
 var colorEnable = false;
+var params = window.location.href
 
 new Vue({
 	el: '#app',
@@ -208,6 +209,9 @@ new Vue({
 		letters: [], //The array that holds the letters
 		infoShow: false //show or hide the array
 	},
+	created: function() {
+		this.preloadMessage();
+	},
 	computed: {
 		typeShow: function() { //hide the "start typing..." when there are letters visible
 			if (!this.letters.length) {
@@ -215,10 +219,14 @@ new Vue({
 			} else {
 				return false;
 			}
+		},
+		preload: function() {
+			return '';
 		}
 	},
 	methods: {
 		setCharacter: function(obj) { //triggers every time the users enters a character
+			console.log(obj);
 			window.scrollTo(0,document.body.scrollHeight); //scrolls the window to follow the characters
 			this.letters.push({ //pushing into the message array
 				char: String.fromCharCode(obj.charCode), //character code into actual character
@@ -253,5 +261,8 @@ new Vue({
 		toggleInfo: function() { //show the info
 			this.infoShow = !this.infoShow;
 		},
+		preloadMessage: function() {
+			console.log(this.preload);
+		}
 	}
 });
