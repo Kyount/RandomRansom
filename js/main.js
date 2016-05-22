@@ -111,8 +111,8 @@ var randoMixin = {
 }
 
 Vue.component('letter', { //the component block for each letter
-	props: ['char', 'colors', 'fonts'], //char = character; colors = color scheme passed in from color array, fonts = font list passed in from font array
-	mixins: [randoMixin],
+	props: ['char'], //char = character; colors = color scheme passed in from color array, fonts = font list passed in from font array
+	mixins: [randoMixin, colorMixin],
 	data: function() {
 		return {
 			styleObj: {
@@ -128,25 +128,37 @@ Vue.component('letter', { //the component block for each letter
 				paddingRight: '',
 				transform: ''
 			},
+			character: [],
 			initSize: 100, //base size of letter
 			sizeVariance: 50, //amount of random variance allowed per letter
 			shadowAmt: 5, //amount of random shadow variance allowed per letter
 			rotateVariance: 10, //amount of random rotation variance allowed per letter
-
 		}
 	},
 	template: '#letter-template',
 	created: function() { //when each letter is created
+		this.setCharacter();
 		this.setColors(); //set the colors
 		this.setSize(); //set the letter size
 		this.setFont(); //set the fonts
 		this.setStyle(); //set the style
 	},
+	computed: {
+		randomColor: function() {
+			return this.randomFromList(this.colorMap);
+		},
+		randomFont: function() {
+			return this.randomFromList(this.fontList);
+		}
+	},
 	methods: {
+		setCharacter() {
+			this.character = this.char[this.char.length - 1];
+		},
 		setColors: function() {
-			if (this.char !== " ") { //if the character isn't a space
-				this.styleObj.color = this.colors[0]; //set the letter color
-				this.styleObj.backgroundColor = this.colors[1]; //set the background color
+			if (this.character !== " ") { //if the character isn't a space
+				this.styleObj.color = this.randomColor[0]; //set the letter color
+				this.styleObj.backgroundColor = this.randomColor[1]; //set the background color
 			} else { //if the character is a space, make sure it doesn't have a color
 				this.styleObj.color = '';
 				this.styleObj.backgroundColor = '';
@@ -159,10 +171,10 @@ Vue.component('letter', { //the component block for each letter
 			//sets the size to be +- size variance based on the initial size randomly
 		},
 		setFont: function() {
-			this.styleObj.fontFamily = this.fonts; //grabs a font from the array
+			this.styleObj.fontFamily = this.randomFont; //grabs a font from the array
 		},
 		setStyle: function() {
-			if (this.char !== " ") { //make sure a space isn't assigned a style
+			if (this.character !== " ") { //make sure a space isn't assigned a style
 				if (this.randomBoolean(true, false, 0.5)) { // 50% chance
 					var n = Math.floor(Math.random()*this.shadowAmt);
 					var m = (Math.random() * (1 - 0.3)) + 0.3;
@@ -207,7 +219,7 @@ new Vue({
 	mixins: [randoMixin, colorMixin],
 	data: {
 		letters: [], //The array that holds the letters
-		infoShow: false //show or hide the array
+		infoShow: false, //show or hide the array
 	},
 	created: function() {
 		this.preloadMessage();
@@ -225,17 +237,24 @@ new Vue({
 		}
 	},
 	methods: {
-		setCharacter: function(obj) { //triggers every time the users enters a character
-			console.log(obj);
-			window.scrollTo(0,document.body.scrollHeight); //scrolls the window to follow the characters
-			this.letters.push({ //pushing into the message array
-				char: String.fromCharCode(obj.charCode), //character code into actual character
-				color: this.randomFromList(this.colorMap), //color from list
-				font: this.randomFromList(this.fontList) //font from list
-			}); //Pushes letter into letters array
-		},
-		deleteLetter: function() {
-			this.letters.pop(); //deletes last letter in array
+		// setCharacter: function(obj) { //triggers every time the users enters a character
+		// 	console.log(obj);
+		// 	window.scrollTo(0,document.body.scrollHeight); //scrolls the window to follow the characters
+		// 	this.letters.push({ //pushing into the message array
+		// 		char: String.fromCharCode(obj.charCode), //character code into actual character
+		// 		color: this.randomFromList(this.colorMap), //color from list
+		// 		font: this.randomFromList(this.fontList) //font from list
+		// 	}); //Pushes letter into letters array
+		// },
+		// deleteLetter: function() {
+		// 	this.letters.pop(); //deletes last letter in array
+		// },
+		reassignChar: function() {
+			var children = this.$refs.item;
+			var l = children.length;
+			for (i=0; i<l; i++) {
+				children[i].character = this.letters[i];
+			}
 		},
 		randomizeLetters: function() { //randomization function
 			var children = this.$refs.item; //grab all the children

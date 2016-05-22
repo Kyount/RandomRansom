@@ -17,17 +17,16 @@
 			</div>
 			<info v-show="infoShow" @click="toggleInfo()"></info>
 			<div class="typeMessage" v-show="typeShow">Start typing...</div>
-			<textarea @keypress="setCharacter($event)"
-					@keydown.8="deleteLetter()" autofocus
+			<textarea v-model="letters" @input="reassignChar()" autofocus
 			></textarea>
 			<div class="letterWrap">
-				<letter class="letter" v-for="letter in letters" v-ref:item :char="letter.char" :colors="letter.color" :fonts="letter.font"></letter>
+				<letter class="letter" v-for="letter in letters" track-by="$index" v-ref:item :char="letters"></letter>
 			</div>
 		</div>
 	</div>
 
 	<template id="letter-template">
-		<span :style="styleObj">{{char}}</span>
+		<span :style="styleObj">{{character}}</span>
 	</template>
 
 	<template id="info-template">
