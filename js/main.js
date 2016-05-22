@@ -138,27 +138,26 @@ Vue.component('letter', { //the component block for each letter
 	template: '#letter-template',
 	created: function() { //when each letter is created
 		this.setCharacter();
-		this.setColors(); //set the colors
-		this.setSize(); //set the letter size
-		this.setFont(); //set the fonts
-		this.setStyle(); //set the style
+		this.randomizeVariables();
 	},
 	computed: {
-		randomColor: function() {
-			return this.randomFromList(this.colorMap);
-		},
-		randomFont: function() {
-			return this.randomFromList(this.fontList);
-		}
+		
 	},
 	methods: {
+		randomizeVariables: function() {
+			this.setColors();
+			this.setSize();
+			this.setFont();
+			this.setStyle();
+		},
 		setCharacter() {
 			this.character = this.char[this.char.length - 1];
 		},
 		setColors: function() {
 			if (this.character !== " ") { //if the character isn't a space
-				this.styleObj.color = this.randomColor[0]; //set the letter color
-				this.styleObj.backgroundColor = this.randomColor[1]; //set the background color
+				var c = this.randomFromList(this.colorMap);
+				this.styleObj.color = c[0]; //set the letter color
+				this.styleObj.backgroundColor = c[1]; //set the background color
 			} else { //if the character is a space, make sure it doesn't have a color
 				this.styleObj.color = '';
 				this.styleObj.backgroundColor = '';
@@ -171,7 +170,7 @@ Vue.component('letter', { //the component block for each letter
 			//sets the size to be +- size variance based on the initial size randomly
 		},
 		setFont: function() {
-			this.styleObj.fontFamily = this.randomFont; //grabs a font from the array
+			this.styleObj.fontFamily = this.randomFromList(this.fontList); //grabs a font from the array
 		},
 		setStyle: function() {
 			if (this.character !== " ") { //make sure a space isn't assigned a style
@@ -202,13 +201,15 @@ Vue.component('letter', { //the component block for each letter
 	}
 });
 
+Vue.component('share', { //template for the info popup
+	template: '#share-template',
+	methods: {
+
+	}
+});
+
 Vue.component('info', { //template for the info popup
 	template: '#info-template',
-	methods: {
-		enableColors: function() {
-			colorEnable = !colorEnable; //this won't be here once I figure out the random bug
-		}
-	}
 });
 
 var colorEnable = false;
@@ -216,13 +217,15 @@ var params = window.location.href
 
 new Vue({
 	el: '#app',
-	mixins: [randoMixin, colorMixin],
+	mixins: [randoMixin],
 	data: {
 		letters: [], //The array that holds the letters
-		infoShow: false, //show or hide the array
+		infoShow: false, //show or hide the info box
+		shareShow: false, //show of hide the share box
 	},
 	created: function() {
 		this.preloadMessage();
+		this.reassignChar();
 	},
 	computed: {
 		typeShow: function() { //hide the "start typing..." when there are letters visible
@@ -232,8 +235,14 @@ new Vue({
 				return false;
 			}
 		},
-		preload: function() {
-			return '';
+		shareURL: function() {
+			var hashParams = window.location.hash.substr(1);
+			if (hashParams) {
+				var p = hashParams.split('=');
+				return p;
+			} else {
+				return null;
+			}
 		}
 	},
 	methods: {
@@ -250,38 +259,36 @@ new Vue({
 		// 	this.letters.pop(); //deletes last letter in array
 		// },
 		reassignChar: function() {
-			var children = this.$refs.item;
-			var l = children.length;
-			for (i=0; i<l; i++) {
-				children[i].character = this.letters[i];
-			}
+			this.$nextTick(function() {
+				var children = this.$refs.item;
+				if (children) {
+				var l = children.length;
+					for (i=0; i<l; i++) {
+						children[i].character = this.letters[i];
+					}
+				} else {
+					console.log("error");
+				}
+			});
+			window.scrollTo(0,document.body.scrollHeight);
 		},
 		randomizeLetters: function() { //randomization function
 			var children = this.$refs.item; //grab all the children
 			var l = children.length;
-			var c = [];
-			var f = [];
-			for (i=0; i<l; i++) { //fill the array with random values from the respective lists
-				c.push(this.randomFromList(this.colorMap));
-				f.push(this.randomFromList(this.fontList));
-			}
-			for (i=0; i<l; i++) { //re-assign all the values randomly per child
-				children[i].colors[0] = c[i][0];
-				children[i].colors[1] = c[i][1];
-				children[i].fonts = f[i];
-				if (colorEnable) { //this is buggy, you have to hit the button in the info page to enable it.
-					children[i].setColors();
-				}
-				children[i].setSize();
-				children[i].setFont();
-				children[i].setStyle();
+			for (i=0; i<l; i++) {
+				children[i].randomizeVariables();
 			}
 		},
 		toggleInfo: function() { //show the info
 			this.infoShow = !this.infoShow;
 		},
+		toggleShow: function() {
+			this.shareShow = !this.shareShow;
+		},
 		preloadMessage: function() {
-			console.log(this.preload);
+			if (this.shareURL) {
+				this.letters = this.shareURL[1];
+			}
 		}
 	}
 });

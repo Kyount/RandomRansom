@@ -11,6 +11,7 @@ body {
 }
 
 textarea {
+	font-size: 10em;
 	display: block;
 	position: fixed;
 	top: 15vw;
@@ -37,7 +38,7 @@ textarea {
 
 		.title {
 			flex: 1;
-			min-width: 100px;
+			min-width: 80px;
 			color: #BBBBBB;
 			position: relative;
 			top: 15px;

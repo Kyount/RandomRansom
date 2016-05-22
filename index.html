@@ -11,13 +11,15 @@
 			<div class="header">
 				<div class="title">Ransom Note Generator</div>
 				<div class="buttons">
-					<button @click="randomizeLetters()">randomize</button>
-					<button @click="toggleInfo()">info</button>
+					<button id="randombtn" @click="randomizeLetters()">randomize</button>
+					<button id="infobtn" @click="toggleInfo()">info</button>
+					<button id="sharebtn" @click="toggleShare()">share</button>
 				</div>
 			</div>
+			<share v-show='shareShow'></share>
 			<info v-show="infoShow" @click="toggleInfo()"></info>
 			<div class="typeMessage" v-show="typeShow">Start typing...</div>
-			<textarea v-model="letters" @input="reassignChar()" autofocus
+			<textarea id="m" v-model="letters" @input="reassignChar()" autofocus
 			></textarea>
 			<div class="letterWrap">
 				<letter class="letter" v-for="letter in letters" track-by="$index" v-ref:item :char="letters"></letter>
@@ -40,8 +42,6 @@
 				</div>
 				<p>Thank you for visiting! This is a small side-project I built that was intended to help me learn a reactive front-end framework, <a href="http://vuejs.org/">Vue.js</a> specifically. Special thanks to the great folks at <a href="https://laracasts.com">laracasts.com</a> for the fantastic instructional videos and support. I do not take responsibility for anyone that uses this demo for real ransom messages. If you are one of those people, please stop and think about what you're getting yourself into.</p>
 
-				<p>If you are an experienced Javascript and/or Vue developer, and you want to help me figure out a strange bug, <a href="#" @click="enableColors()">click here.</a> This will enable random colors. If you type more than a page's worth of text and attempt to randomize, you'll see the colors start to become less and less random. If you know what's going on, please feel free to contact me with the answer, I'd love to know.</p>
-
 				<p>If you like what you see and you're feeling generous, donations are much appreciated!</p>
 				<div class="donate">
 					<a href="https://paypal.me/KyleY">Donate</a>
@@ -49,6 +49,11 @@
 			</div>
 		</div>
 	</template>
+	
+	<template id="share-template">
+		<div></div>
+	</template>
+
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.13/vue-router.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
