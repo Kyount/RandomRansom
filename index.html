@@ -4,29 +4,28 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" href="./css/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
-
-	<div id="app" class="messageContainer">
-			<div class="header">
-				<div class="title">Ransom Note Generator</div>
-				<div class="buttons">
-					<button id="randombtn" @click="randomizeLetters()">randomize</button>
-					<button id="clearbtn" @click="clearMessage()">clear</button>
-					<button id="infobtn" @click="toggleInfo()">info</button>
-					<button id="sharebtn" @click="toggleShare()">share</button>
-				</div>
+	<div id="app" class="messageContainer" style="opacity:0">
+		<div class="header headHide" :class="{'headHide': firstLoad, 'headShow': !firstLoad}">
+			<div class="title">Ransom Note Generator</div>
+			<div class="buttons">
+				<button id="randombtn" @click="randomizeLetters()">randomize</button>
+				<button id="clearbtn" @click="clearMessage()">clear</button>
+				<button id="infobtn" @click="toggleInfo()">info</button>
+				<button id="sharebtn" @click="toggleShare()">share</button>
 			</div>
+		</div>
 
-			<share v-show="shareShow" :url="shareURL"></share>
-			<info v-show="infoShow"></info>
+		<share v-show="shareShow" :url="shareURL"></share>
+		<info v-show="infoShow"></info>
 
-			<div class="typeMessage" v-show="typeShow">Start typing...</div>
-			<textarea id="m" v-model="letters" @input="reassignChar()" autofocus
-			></textarea>
-			<div class="letterWrap">
-				<letter class="letter" v-for="letter in letters" track-by="$index" v-ref:item :char="letters"></letter>
-			</div>
+		<div class="typeMessage" v-show="typeShow">Start typing...</div>
+		<textarea id="m" v-model="letters" @input="reassignChar()" @mousemove="showHeader()" @touchmove="showHeader()" autofocus
+		></textarea>
+		<div class="letterWrap">
+			<letter class="letter" v-for="letter in letters" track-by="$index" v-ref:item :char="letters"></letter>
 		</div>
 	</div>
 
@@ -47,8 +46,10 @@
 				<p>Thank you for visiting! This is a small side-project I built that was intended to help me learn a reactive front-end framework, <a href="http://vuejs.org/">Vue.js</a> specifically. Special thanks to the great folks at <a href="https://laracasts.com">laracasts.com</a> for the fantastic instructional videos and support. <span style="color:red">I do not take responsibility for the actions of anyone that uses this demo for real ransom messages. If you are one of those people, please stop and think about what you're getting yourself into.</span></p>
 				<h2>Planned Features:</h2>
 				<ul>
-					<li>Seeding the random generation so it persists with the URL that you share</li>
-					<li>Custom control over the generation</li>
+					<li>Seeding the random generation so it persists with the URL that you share.</li>
+					<li>Custom control over the generation.</li>
+					<li>Figure out a way to not break-word while still allowing random rotation.</li>
+					<li>Implement a URL shortener service.</li>
 				</ul>
 
 				<p>If you like what you see and you're feeling generous, donations are much appreciated!</p>
@@ -71,11 +72,14 @@
 			</div>
 		</div>
 	</template>
-
+	
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.13/vue-router.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
 	<script type="text/javascript" src="./js/main.js"></script>
+	<script type="text/javascript">
+		$(window).on("load", function() {
+			$('#app').css("opacity", 1);
+		});
+	</script>
 </body>
 </html>

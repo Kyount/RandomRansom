@@ -228,7 +228,8 @@ var vm = new Vue({
 		infoShow: false, //show or hide the info box
 		shareShow: false, //show of hide the share box
 		shareURL: '',
-		wasPreloaded: false
+		wasPreloaded: false,
+		firstLoad: false
 	},
 	created: function() {
 		this.preloadMessage();
@@ -311,10 +312,16 @@ var vm = new Vue({
 			}
 			this.shareShow = !this.shareShow;
 		},
+		showHeader: function() {
+			this.firstLoad = false;
+		},
 		preloadMessage: function() {
 			if (this.getMessageFromURL) {
 				this.letters = decodeURIComponent(this.getMessageFromURL[1]);
 				this.wasPreloaded = true;
+				this.firstLoad = true;
+			} else {
+				this.firstLoad = false;
 			}
 		}
 	}

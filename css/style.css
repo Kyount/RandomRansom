@@ -1,3 +1,6 @@
+html {
+  text-rendering: geometricPrecision; }
+
 body {
   width: 100%;
   margin: 0;
@@ -24,14 +27,18 @@ textarea {
     textarea {
       top: 120px; } }
 
+#app {
+  transition: opacity 0.2s; }
+
 .messageContainer {
-  max-width: 1000px;
+  max-width: 1200px;
   height: 100%;
   margin: 0 auto; }
   .messageContainer .header {
     display: flex;
     position: relaitve;
-    width: 100%; }
+    width: 100%;
+    transition: margin-top ease 0.5s; }
     .messageContainer .header .title {
       flex: 1;
       min-width: 60px;
@@ -55,16 +62,17 @@ textarea {
         border-radius: 20px;
         background-color: transparent;
         color: #BBBBBB;
-        font-size: 16px;
+        font-size: 14px;
         cursor: pointer;
         box-shadow: inset -2px -2px 2px 1px rgba(0, 0, 0, 0.2);
         outline: 0; }
-        @media (max-width: 400px) {
-          .messageContainer .header .buttons button {
-            font-size: 14px; } }
       .messageContainer .header .buttons button:active {
         background-color: transparent;
         box-shadow: inset 2px 2px 2px 1px rgba(0, 0, 0, 0.2); }
+  .messageContainer .headHide {
+    margin-top: -80px; }
+  .messageContainer .headShow {
+    margin-top: 0px; }
   .messageContainer #cursor {
     height: 10em;
     width: 6em;
@@ -73,6 +81,7 @@ textarea {
     top: 1em; }
 
 .letterWrap {
+  word-wrap: break-word;
   display: block;
   position: relative;
   z-index: -1;
@@ -80,7 +89,7 @@ textarea {
   padding-right: 1em;
   padding-left: 1em; }
   .letterWrap span {
-    display: inline-block; }
+    display: inline; }
   .letterWrap .letter {
     position: relative; }
 

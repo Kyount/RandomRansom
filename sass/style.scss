@@ -1,3 +1,7 @@
+html {
+	text-rendering: geometricPrecision;
+}
+
 body {
 	width: 100%;
 	margin: 0;
@@ -26,8 +30,12 @@ textarea {
 	opacity: 0;
 }
 
+#app {
+	transition: opacity 0.2s;
+}
+
 .messageContainer {
-	max-width: 1000px;
+	max-width: 1200px;
 	height: 100%;
 	margin: 0 auto;
 
@@ -35,6 +43,7 @@ textarea {
 		display: flex;
 		position: relaitve;
 		width: 100%;
+		transition: margin-top ease 0.5s;
 
 		.title {
 			flex: 1;
@@ -66,10 +75,10 @@ textarea {
 			    border-radius: 20px;
 			    background-color: rgba(0,0,0,0);
 			    color: #BBBBBB;
-			    font-size: 16px;
-			    @media (max-width: 400px) {
-					font-size: 14px;
-				}
+			    font-size: 14px;
+			 //    @media (max-width: 400px) {
+				// 	font-size: 14px;
+				// }
 			    cursor: pointer;
 			    box-shadow: inset -2px -2px 2px 1px rgba(0,0,0,0.2);
 			    outline: 0;
@@ -79,6 +88,13 @@ textarea {
 				box-shadow: inset 2px 2px 2px 1px rgba(0,0,0,0.2);
 			}
 		}
+	}
+
+	.headHide {
+		margin-top: -80px;
+	}
+	.headShow {
+		margin-top: 0px;
 	}
 
 	#cursor {
@@ -91,6 +107,7 @@ textarea {
 }
 
 .letterWrap {
+	word-wrap: break-word;
 	display: block;
 	position: relative;
 	z-index: -1;
@@ -98,7 +115,7 @@ textarea {
 	padding-right: 1em;
 	padding-left: 1em;
 	span {
-		display: inline-block;
+		display: inline;
 	}
 	.letter {
 		position: relative;
