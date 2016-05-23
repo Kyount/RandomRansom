@@ -154,6 +154,14 @@ Vue.component('letter', { //the component block for each letter
 				this.setSize();
 				this.styleObj.marginRight = "0.4em";
 				this.styleObj.marginLeft = "0.4em";
+				this.styleObj.color = '';
+				this.styleObj.backgroundColor = '';
+				this.styleObj.fontFamily = '';
+				this.styleObj.textShadow = '';
+				this.styleObj.boxShadow = '';
+				this.styleObj.paddingLeft = '';
+				this.styleObj.paddingRight = '';
+				this.styleObj.transform = '';
 			}
 		},
 		setCharacter() {
@@ -265,17 +273,17 @@ var vm = new Vue({
 					if (this.wasPreloaded) {
 						for (i=0; i<l; i++) {
 							children[i].randomizeVariables();
-						}
-						
+						}	
 					}
 				} else {
 					console.log("error");
 				}
+				if (!this.wasPreloaded) {
+					window.scrollTo(0,document.body.scrollHeight);
+				}
+				this.wasPreloaded = false;
 			});
-			if (!this.wasPreloaded) {
-				window.scrollTo(0,document.body.scrollHeight);
-			}
-			this.wasPreloaded = false;
+			
 		},
 		clearMessage: function() {
 			this.letters = [];

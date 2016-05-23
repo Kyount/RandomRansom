@@ -4,8 +4,16 @@
 		"selected_items":
 		[
 			[
+				"font",
+				"font-weight"
+			],
+			[
 				"border",
-				"border-radius"
+				"border-box"
+			],
+			[
+				"box",
+				"box-sizing"
 			],
 			[
 				"op",
@@ -33,10 +41,6 @@
 			],
 			[
 				"fon",
-				"font-size"
-			],
-			[
-				"font",
 				"font-size"
 			],
 			[
@@ -219,6 +223,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 3977,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/main.js",
+			"settings":
+			{
+				"buffer_size": 9947,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -279,12 +299,9 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/C/Users/Kyle/Projects/Ransom"
-	],
 	"file_history":
 	[
+		"/C/Users/Kyle/Projects/Ransom/sass/style.scss",
 		"/C/Users/Kyle/Projects/Laravel/Kyount/resources/views/work/mikegosalia.blade.php",
 		"/C/Users/Kyle/Projects/Laravel/Kyount/public/rng/index.html",
 		"/C/Users/Kyle/Projects/Laravel/Kyount/resources/views/projects/RansomNoteGenerator.blade.php",
@@ -411,8 +428,7 @@
 		"/C/Users/Kyle/AppData/Local/Temp/scp51837/var/www/test/database/migrations/2016_02_24_005116_create_cards_table.php",
 		"/C/Users/Kyle/AppData/Local/Temp/scp36555/var/www/test/public/css/style.css",
 		"/C/Users/Kyle/AppData/Local/Temp/scp56180/var/www/test/.env",
-		"/C/Users/Kyle/AppData/Local/Temp/scp31098/var/www/test/app/Http/routes.php",
-		"/C/Users/Kyle/AppData/Local/Temp/scp34886/var/www/test/app/Http/Controllers/CardsController.php"
+		"/C/Users/Kyle/AppData/Local/Temp/scp31098/var/www/test/app/Http/routes.php"
 	],
 	"find":
 	{
@@ -430,6 +446,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"&",
+			"left",
 			"this",
 			"value",
 			"waitforload",
@@ -477,8 +495,67 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3977,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9947,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9145,
+								9145
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5922.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
