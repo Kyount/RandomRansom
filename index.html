@@ -23,7 +23,7 @@
 		<info v-show="infoShow"></info>
 
 		<div class="typeMessage" v-show="typeShow">Start typing...</div>
-		<textarea id="m" v-model="letters" @input="reassignChar()" @mousemove="showHeader()" @touchmove="showHeader()" autofocus
+		<textarea id="m" v-model="letters" @input="reassignChar()" @mousemove="showHeader()" @touchmove="showHeader()" autofocus autocomplete="off" 
 		></textarea>
 		<div class="letterWrap">
 			<letter class="letter" v-for="letter in letters" track-by="$index" v-ref:item :char="letters"></letter>
