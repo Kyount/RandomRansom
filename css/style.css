@@ -81,6 +81,7 @@ textarea {
     top: 1em; }
 
 .letterWrap {
+  overflow-x: hidden;
   word-wrap: break-word;
   display: block;
   position: relative;

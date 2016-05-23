@@ -291,7 +291,7 @@ var vm = new Vue({
 			if (this.letters.length) {
 				console.log(this.letters);
 				var msg = this.letters;
-				var website = "kyount.com/rng#m="
+				var website = "kyount.com/rng/#m="
 				this.shareURL = website + encodeURIComponent(msg).replace(/[!'()*]/g, function(c) {
 					return '%' + c.charCodeAt(0).toString(16);
 				});	

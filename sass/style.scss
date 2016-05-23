@@ -107,6 +107,7 @@ textarea {
 }
 
 .letterWrap {
+	overflow-x: hidden;
 	word-wrap: break-word;
 	display: block;
 	position: relative;
