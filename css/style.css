@@ -135,16 +135,40 @@ textarea {
       font-weight: 400; }
     .infoContainerWrap .infoContainer a {
       color: #000000; }
-    .infoContainerWrap .infoContainer input {
-      border-radius: .2em;
-      font-family: sans-serif;
-      padding: .2em;
-      border: 2px solid #CCCCCC;
-      box-sizing: border-box;
-      font-size: 1.3em;
-      resize: none;
-      width: 100%;
-      outline: none; }
+    .infoContainerWrap .infoContainer .inputPair {
+      display: flex; }
+      .infoContainerWrap .infoContainer .inputPair > * {
+        flex: 1;
+        display: inline-block;
+        padding: 5px;
+        border-top: 2px solid #CCCCCC;
+        border-bottom: 2px solid #CCCCCC; }
+      .infoContainerWrap .infoContainer .inputPair input {
+        font-size: 1.3em;
+        margin: 0;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        font-family: sans-serif;
+        border-right: none;
+        border-left: 2px solid #CCCCCC;
+        box-sizing: border-box;
+        resize: none;
+        outline: none; }
+      .infoContainerWrap .infoContainer .inputPair button {
+        font-family: sans-serif;
+        font-size: 1em;
+        max-width: 80px;
+        cursor: pointer;
+        margin: 0;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background-color: #FFFFFF;
+        border: 2px solid #000000;
+        color: #000000;
+        font-weight: bold; }
+        @media (max-width: 400px) {
+          .infoContainerWrap .infoContainer .inputPair button {
+            font-size: 0.8em; } }
     .infoContainerWrap .infoContainer .closeBtn {
       position: absolute;
       right: 0;

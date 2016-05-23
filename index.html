@@ -64,7 +64,10 @@
 			<div class="infoContainer">
 				<button class="closeBtn" @click="toggleShare()">X</button>
 				<h2>Send your friends a ransom note!</h2>
-				<input id='shortURL' value="{{url}}" placeholder="You haven't typed anything yet..." type='text'>
+				<div class="inputPair">
+					<input readonly id='rngurl' value="{{url}}" placeholder="You haven't typed anything yet..." type='text'>
+					<button id='copybtn' data-clipboard-target="#rngurl">Copy</button>
+				</div>
 			</div>
 		</div>
 	</template>
@@ -72,6 +75,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.13/vue-router.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
 	<script type="text/javascript" src="./js/main.js"></script>
 </body>
 </html>

@@ -218,6 +218,8 @@ Vue.component('info', { //template for the info popup
 
 var colorEnable = false;
 
+new Clipboard('#copybtn');
+
 var vm = new Vue({
 	el: '#app',
 	mixins: [randoMixin],
@@ -285,12 +287,15 @@ var vm = new Vue({
 			}
 		},
 		setShareURL: function() {
-			if (this.letters) {
+			if (this.letters.length) {
+				console.log(this.letters);
 				var msg = this.letters;
 				var website = "kyount.com/rng#m="
 				this.shareURL = website + encodeURIComponent(msg).replace(/[!'()*]/g, function(c) {
 					return '%' + c.charCodeAt(0).toString(16);
 				});	
+			} else {
+				this.shareURL = '';
 			}
 		},
 		toggleInfo: function() { //show the info
