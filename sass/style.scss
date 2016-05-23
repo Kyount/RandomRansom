@@ -11,7 +11,7 @@ body {
 }
 
 textarea {
-	font-size: 10em;
+	font-size: 1px;
 	display: block;
 	position: fixed;
 	top: 15vw;
@@ -38,7 +38,7 @@ textarea {
 
 		.title {
 			flex: 1;
-			min-width: 80px;
+			min-width: 60px;
 			color: #BBBBBB;
 			position: relative;
 			top: 15px;
@@ -67,6 +67,9 @@ textarea {
 			    background-color: rgba(0,0,0,0);
 			    color: #BBBBBB;
 			    font-size: 16px;
+			    @media (max-width: 400px) {
+					font-size: 14px;
+				}
 			    cursor: pointer;
 			    box-shadow: inset -2px -2px 2px 1px rgba(0,0,0,0.2);
 			    outline: 0;
@@ -128,13 +131,14 @@ textarea {
 	position: absolute;
 	right: 0;
 	left: 0;
-	top: 20vmin; //WOW
+	top: 80px; //WOW
 	z-index: 1;
 
 	.infoContainer {
+		position: relative;
 		background-color: white;
 		padding: 1em;
-    	box-shadow: 1px 1px 17px 0px rgba(0,0,0,0.2);
+    	box-shadow: 1px 1px 17px 0px rgba(0,0,0,0.4);
 		display: block;
 		max-width: 500px;
 		margin: 0 auto;
@@ -159,6 +163,34 @@ textarea {
 
 		a {
 			color: #000000;
+		}
+
+		input {
+		    border-radius: .2em;
+			font-family: sans-serif;
+			padding: .2em;
+			border: 2px solid #CCCCCC;
+			box-sizing: border-box;
+			font-size: 1.3em;
+			resize: none;
+			width: 100%;
+			outline: none;
+		}
+
+		.closeBtn {
+			position: absolute;
+		    right: 0;
+		    top: 0;
+		    margin: 10px;
+		    border: 2px solid #FFB6B6;
+		    height: 25px;
+		    width: 50px;
+		    background-color: #FF0000;
+		    color: #FFFFFF;
+		    cursor: pointer;
+		    font-family: "Lato";
+		    font-weight: bold;
+		    outline: none;
 		}
 
 		.icons {

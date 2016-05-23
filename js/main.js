@@ -132,7 +132,7 @@ Vue.component('letter', { //the component block for each letter
 			initSize: 100, //base size of letter
 			sizeVariance: 50, //amount of random variance allowed per letter
 			shadowAmt: 5, //amount of random shadow variance allowed per letter
-			rotateVariance: 10, //amount of random rotation variance allowed per letter
+			rotateVariance: 5, //amount of random rotation variance allowed per letter
 		}
 	},
 	template: '#letter-template',
@@ -145,23 +145,24 @@ Vue.component('letter', { //the component block for each letter
 	},
 	methods: {
 		randomizeVariables: function() {
-			this.setColors();
-			this.setSize();
-			this.setFont();
-			this.setStyle();
+			if (this.character !== ' ') {
+				this.setColors();
+				this.setSize();
+				this.setFont();
+				this.setStyle();
+			} else {
+				this.setSize();
+				this.styleObj.marginRight = "0.4em";
+				this.styleObj.marginLeft = "0.4em";
+			}
 		},
 		setCharacter() {
 			this.character = this.char[this.char.length - 1];
 		},
 		setColors: function() {
-			if (this.character !== " ") { //if the character isn't a space
-				var c = this.randomFromList(this.colorMap);
-				this.styleObj.color = c[0]; //set the letter color
-				this.styleObj.backgroundColor = c[1]; //set the background color
-			} else { //if the character is a space, make sure it doesn't have a color
-				this.styleObj.color = '';
-				this.styleObj.backgroundColor = '';
-			}
+			var c = this.randomFromList(this.colorMap);
+			this.styleObj.color = c[0]; //set the letter color
+			this.styleObj.backgroundColor = c[1]; //set the background color
 		},
 		setSize: function() {
 			var siV = this.sizeVariance;
@@ -173,29 +174,24 @@ Vue.component('letter', { //the component block for each letter
 			this.styleObj.fontFamily = this.randomFromList(this.fontList); //grabs a font from the array
 		},
 		setStyle: function() {
-			if (this.character !== " ") { //make sure a space isn't assigned a style
-				if (this.randomBoolean(true, false, 0.5)) { // 50% chance
-					var n = Math.floor(Math.random()*this.shadowAmt);
-					var m = (Math.random() * (1 - 0.3)) + 0.3;
-					this.styleObj.textShadow =
-						this.randomBoolean(n, -n, 0.5) + "px "
-						+ this.randomBoolean(n, -n, 0.5) + "px " +
-						"0px " + "rgba(0,0,0," + m + ")";
-				} //this just sets the drop shadow based on the shadow variance value
-				if (this.randomBoolean(true, false, 0.5)) { // 50% chance
-					var v = this.rotateVariance;
-					var r = ((Math.random()*v*2)-v) + "deg";
-					this.styleObj.transform = "rotate(" + r + ")"; //assign random rotation
-				}
-				if (this.randomBoolean(true, false, 0.5)) { // 50% chance
-					this.styleObj.paddingRight = Math.random()/4 + "em"; //assign random padding right
-				}
-				if (this.randomBoolean(true, false, 0.5)) { // 50% chance
-					this.styleObj.paddingLeft = Math.random()/4 + "em"; //assign random padding left
-				}
-			} else { //if the character is a space assign it a margin only
-				this.styleObj.marginRight = "0.3em";
-				this.styleObj.marginLeft = "0.3em";
+			if (this.randomBoolean(true, false, 0.5)) { // 50% chance
+				var n = Math.floor(Math.random()*this.shadowAmt);
+				var m = (Math.random() * (1 - 0.3)) + 0.3;
+				this.styleObj.textShadow =
+					this.randomBoolean(n, -n, 0.5) + "px "
+					+ this.randomBoolean(n, -n, 0.5) + "px " +
+					"0px " + "rgba(0,0,0," + m + ")";
+			} //this just sets the drop shadow based on the shadow variance value
+			if (this.randomBoolean(true, false, 0.5)) { // 50% chance
+				var v = this.rotateVariance;
+				var r = ((Math.random()*v*2)-v) + "deg";
+				this.styleObj.transform = "rotate(" + r + ")"; //assign random rotation
+			}
+			if (this.randomBoolean(true, false, 0.5)) { // 50% chance
+				this.styleObj.paddingRight = Math.random()/4 + "em"; //assign random padding right
+			}
+			if (this.randomBoolean(true, false, 0.5)) { // 50% chance
+				this.styleObj.paddingLeft = Math.random()/4 + "em"; //assign random padding left
 			}
 		}
 	}
@@ -203,25 +199,34 @@ Vue.component('letter', { //the component block for each letter
 
 Vue.component('share', { //template for the info popup
 	template: '#share-template',
+	props: ['url'],
 	methods: {
-
+		toggleShare() {
+			vm.toggleShare();
+		}
 	}
 });
 
 Vue.component('info', { //template for the info popup
 	template: '#info-template',
+	methods: {
+		toggleInfo() {
+			vm.toggleInfo();
+		}
+	}
 });
 
 var colorEnable = false;
-var params = window.location.href
 
-new Vue({
+var vm = new Vue({
 	el: '#app',
 	mixins: [randoMixin],
 	data: {
 		letters: [], //The array that holds the letters
 		infoShow: false, //show or hide the info box
 		shareShow: false, //show of hide the share box
+		shareURL: '',
+		wasPreloaded: false
 	},
 	created: function() {
 		this.preloadMessage();
@@ -235,7 +240,7 @@ new Vue({
 				return false;
 			}
 		},
-		shareURL: function() {
+		getMessageFromURL: function() {
 			var hashParams = window.location.hash.substr(1);
 			if (hashParams) {
 				var p = hashParams.split('=');
@@ -246,31 +251,31 @@ new Vue({
 		}
 	},
 	methods: {
-		// setCharacter: function(obj) { //triggers every time the users enters a character
-		// 	console.log(obj);
-		// 	window.scrollTo(0,document.body.scrollHeight); //scrolls the window to follow the characters
-		// 	this.letters.push({ //pushing into the message array
-		// 		char: String.fromCharCode(obj.charCode), //character code into actual character
-		// 		color: this.randomFromList(this.colorMap), //color from list
-		// 		font: this.randomFromList(this.fontList) //font from list
-		// 	}); //Pushes letter into letters array
-		// },
-		// deleteLetter: function() {
-		// 	this.letters.pop(); //deletes last letter in array
-		// },
 		reassignChar: function() {
 			this.$nextTick(function() {
 				var children = this.$refs.item;
 				if (children) {
-				var l = children.length;
+					var l = children.length;
 					for (i=0; i<l; i++) {
 						children[i].character = this.letters[i];
+					}
+					if (this.wasPreloaded) {
+						for (i=0; i<l; i++) {
+							children[i].randomizeVariables();
+						}
+						
 					}
 				} else {
 					console.log("error");
 				}
 			});
-			window.scrollTo(0,document.body.scrollHeight);
+			if (!this.wasPreloaded) {
+				window.scrollTo(0,document.body.scrollHeight);
+			}
+			this.wasPreloaded = false;
+		},
+		clearMessage: function() {
+			this.letters = [];
 		},
 		randomizeLetters: function() { //randomization function
 			var children = this.$refs.item; //grab all the children
@@ -279,15 +284,32 @@ new Vue({
 				children[i].randomizeVariables();
 			}
 		},
+		setShareURL: function() {
+			if (this.letters) {
+				var msg = this.letters;
+				var website = "kyount.com/rng#m="
+				this.shareURL = website + encodeURIComponent(msg).replace(/[!'()*]/g, function(c) {
+					return '%' + c.charCodeAt(0).toString(16);
+				});	
+			}
+		},
 		toggleInfo: function() { //show the info
+			if (this.shareShow) {
+				this.shareShow = !this.shareShow;
+			}
 			this.infoShow = !this.infoShow;
 		},
-		toggleShow: function() {
+		toggleShare: function() {
+			this.setShareURL();
+			if (this.infoShow) {
+				this.infoShow = !this.infoShow;
+			}
 			this.shareShow = !this.shareShow;
 		},
 		preloadMessage: function() {
-			if (this.shareURL) {
-				this.letters = this.shareURL[1];
+			if (this.getMessageFromURL) {
+				this.letters = decodeURIComponent(this.getMessageFromURL[1]);
+				this.wasPreloaded = true;
 			}
 		}
 	}
